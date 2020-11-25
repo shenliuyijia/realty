@@ -9,6 +9,7 @@
     <result column="houseType" property="housetype" jdbcType="VARCHAR" />
     <result column="area" property="area" jdbcType="INTEGER" />
     <result column="buildTime" property="buildtime" jdbcType="DATE" />
+    <association property="users" select="com.kgc.property.mapper.UsersMapper.selectByPrimaryKey" column="cardId"></association>
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
