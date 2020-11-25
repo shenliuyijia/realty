@@ -21,12 +21,12 @@ public class RealServiceImpl implements RealService {
     @Resource
     RealMapper realMapper;
 
-    @Override
-    public PageInfo<Real> selectAll(RealExample realExample, Integer pageNum, Integer pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
+    public PageInfo<Real> select(RealExample realExample, Integer pageNum, Integer pageSize) {
+
+        PageHelper.startPage(pageNum,pageSize);
         PageHelper.orderBy("id");
         List<Real> reals = realMapper.selectByExample(realExample);
-        PageInfo<Real> pageInfo=new PageInfo<>(reals);
+        PageInfo<Real> pageInfo = new PageInfo<>(reals);
         return pageInfo;
     }
 }

@@ -1,6 +1,9 @@
 package com.kgc.git2018.service;
 
 import com.kgc.git2018.pojo.Users;
+import com.kgc.git2018.pojo.UsersExample;
+
+import java.util.List;
 
 public interface UserService {
 
@@ -12,6 +15,8 @@ public interface UserService {
 
     //登录
     Users login(String cardid, String password);
+
+    List<Users> selectByExample(UsersExample example);
 
 
 }

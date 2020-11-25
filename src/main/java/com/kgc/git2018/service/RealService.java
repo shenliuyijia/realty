@@ -9,5 +9,5 @@ import com.kgc.git2018.pojo.RealExample;
  * @create 2020-11-25 17:37
  */
 public interface RealService {
-    PageInfo<Real> selectAll(RealExample realExample, Integer pageNum, Integer pageSize);
+    public PageInfo<Real> select(RealExample realExample, Integer pageNum, Integer pageSize);
 }

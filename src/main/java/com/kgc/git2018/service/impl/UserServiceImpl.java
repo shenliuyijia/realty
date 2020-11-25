@@ -34,4 +34,9 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Override
+    public List<Users> selectByExample(UsersExample example) {
+        return usersMapper.selectByExample(example);
+    }
+
 }
