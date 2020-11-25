@@ -16,9 +16,9 @@ public class UserServiceImpl implements UserService {
 
     //登录
     @Override
-    public Users login(String carIdid, String password) {
+    public Users login(String cardid, String password) {
         UsersExample usersExample = new UsersExample();
-        usersExample.createCriteria().andCardidEqualTo(carIdid).andPasswordEqualTo(password);
+        usersExample.createCriteria().andCardidEqualTo(cardid).andPasswordEqualTo(password);
         List<Users> users = usersMapper.selectByExample(usersExample);
         Users user = users.get(0);
         return user;

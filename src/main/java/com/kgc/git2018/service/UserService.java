@@ -4,6 +4,6 @@ import com.kgc.git2018.pojo.Users;
 
 public interface UserService {
     //登录
-    Users login(String carIdid, String password);
+    Users login(String cardid, String password);
 
 }
