@@ -51,36 +51,27 @@ public class UserController {
     }
 
     @RequestMapping("/register")
-    public void Register(@RequestParam("cardid")String cardid, @RequestParam("name") String name, @RequestParam("gender") Integer gender, @RequestParam("createtime") String createtime, @RequestParam("password") String password, @RequestParam("status") Integer status, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-         cardid = request.getParameter("cardid");
-         name = request.getParameter("name");
-         String sex = request.getParameter("gender");
-         if(sex!=null){
-             gender = Integer.parseInt(sex);
-         }
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = sdf.parse(createtime);
-        password = request.getParameter("password");
-        String swe = request.getParameter("status");
-        if(swe!=null){
-            status = Integer.parseInt(swe);
+    public String register(Users users,Model model){
+        String cardid = users.getCardid();
+        String s = cardid.substring(17);
+        if (s.equals('x')){
+            users.setGender(0);
+        }else if (Integer.parseInt(s)%2==1){
+            users.setGender(1);
+        }else if (Integer.parseInt(s)%2==0){
+            users.setGender(0);
+        }else {
+            model.addAttribute("msg","账号输入有误，请重新输入");
+            return "register";
         }
-        Users users = new Users();
-        users.setCardid(cardid);
-        users.setName(name);
-        users.setGender(gender);
-        users.setCreatetime(date);
-        users.setPassword(password);
-        users.setStatus(status);
+        users.setCreatetime(new Date());
+        users.setStatus(1);
         int i = userService.add(users);
         if(i>0){
-           out.write("<script>alert('注册已成功,现在去登录吗！');location.href='/login';</script>");
+            model.addAttribute("getTrue","注册以成功，现在去登录吗");
         }else {
-            out.write("<script>alert('注册失败');location.href='/register';</script>");
+            model.addAttribute("msg","注册失败");
         }
+        return "register";
     }
 }
