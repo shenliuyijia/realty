@@ -17,6 +17,16 @@ public class Real {
 
     private Date buildtime;
 
+    private Users users;
+
+    public Users getUsers() {
+        return users;
+    }
+
+    public void setUsers(Users users) {
+        this.users = users;
+    }
+
     public Integer getId() {
         return id;
     }
