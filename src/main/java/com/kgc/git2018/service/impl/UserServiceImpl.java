@@ -4,6 +4,7 @@ import com.kgc.git2018.mapper.UsersMapper;
 import com.kgc.git2018.pojo.Users;
 import com.kgc.git2018.pojo.UsersExample;
 import com.kgc.git2018.service.UserService;
+import org.junit.Test;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -23,4 +24,5 @@ public class UserServiceImpl implements UserService {
         Users user = users.get(0);
         return user;
     }
+
 }
