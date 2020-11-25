@@ -1,6 +1,12 @@
 package com.kgc.git2018.controller;
+import com.github.pagehelper.PageInfo;
+import com.kgc.git2018.pojo.Real;
+import com.kgc.git2018.pojo.RealExample;
 import com.kgc.git2018.pojo.Users;
+import com.kgc.git2018.pojo.UsersExample;
+import com.kgc.git2018.service.RealService;
 import com.kgc.git2018.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,13 +18,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class UserController {
 
     @Resource
     private UserService userService;
+    @Autowired
+    RealService realService;
 
 
     @RequestMapping("/toregister")
@@ -80,5 +90,53 @@ public class UserController {
             model.addAttribute("msg","注册失败");
         }
         return "register";
+    }
+
+    @RequestMapping("/list")
+    public String list(@RequestParam(value = "select",required = false,defaultValue = "1") String select,
+                       @RequestParam(value = "name",required = false)String name,
+                       @RequestParam(value = "pageNum",required = false)Integer pageNum,
+                       Model model){
+        System.out.println(select+"aaaaa");
+        System.out.println("name:"+name);
+        System.out.println(pageNum);
+        Integer pageStr=1;
+        if (pageNum!=null){
+            pageStr=pageNum;
+        }
+        Integer pageSize = 2;
+        RealExample realExample = new RealExample();
+        UsersExample usersExample = new UsersExample();
+        List<String> s = new ArrayList<>();
+        PageInfo<Real> pageInfo = null;
+        String newname ="%"+name+"%";
+        if (select.equals("2")){
+            if (name!=null){
+                realExample.createCriteria().andCardidLike(newname);
+                System.out.println("ccc-------");
+                pageInfo = realService.select(realExample, pageStr, pageSize);
+            }else {
+                System.out.println("bbb==========");
+                pageInfo = realService.select(null, pageStr, pageSize);
+            }
+        }else {
+            if (name!=null){
+                usersExample.createCriteria().andNameLike(newname);
+                List<Users> users = userService.selectByExample(usersExample);
+                if (users!=null){
+                    for (Users user : users) {
+                        s.add(user.getCardid());
+                    }
+                }
+                realExample.createCriteria().andCardidIn(s);
+                pageInfo = realService.select(realExample, pageStr, pageSize);
+            }else {
+                pageInfo = realService.select(null, pageStr, pageSize);
+            }
+        }
+        model.addAttribute("pageInfo",pageInfo);
+        model.addAttribute("selectid",select);
+        model.addAttribute("getName",name);
+        return "show";
     }
 }
