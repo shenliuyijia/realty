@@ -14,6 +14,7 @@ public class UsersController {
     @Resource
     UserService userService;
 
+    //登录
     @RequestMapping("login")
     public String login (String cardid, String password, HttpSession session, Model model){
 
