@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -25,7 +26,19 @@ public class UserController {
         return "/register";
     }
 
-    @RequestMapping("getdo")
+    //登录
+    @RequestMapping("/login")
+    public String login (String cardid, String password, HttpSession session, Model model){
+
+        Users users = userService.login(cardid,password);
+        if (users!=null) {
+            session.setAttribute("user",users);
+            return "/show";
+        }
+        return "/login";
+    }
+
+    @RequestMapping("/getCard")
     public String Caid(String cardid, Model model){
         Users users = userService.select(cardid);
         System.out.println(users.toString());

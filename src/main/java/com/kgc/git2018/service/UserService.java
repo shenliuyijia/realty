@@ -9,4 +9,9 @@ public interface UserService {
 
     //身份证
     Users select(String cardid);
+
+    //登录
+    Users login(String cardid, String password);
+
+
 }
