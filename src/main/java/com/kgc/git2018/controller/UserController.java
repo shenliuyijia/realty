@@ -38,6 +38,13 @@ public class UserController {
         return "/login";
     }
 
+    //退出
+    @RequestMapping("/logout")
+    public String logout(HttpSession session,Model model){
+        session.invalidate();
+        return "redirect:index.jsp";
+    }
+
     @RequestMapping("/getCard")
     public String Caid(String cardid, Model model){
         Users users = userService.select(cardid);
